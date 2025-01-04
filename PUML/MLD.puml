@@ -1,0 +1,71 @@
+@startuml MLD_Marathon
+
+entity users {
+    * id : INTEGER [PK]
+    --
+    name : VARCHAR(50)
+    email : VARCHAR(150)
+    password : VARCHAR(100)
+    avatar : VARCHAR(150)
+    created_at : DATETIME
+    updated_at : DATETIME
+}
+
+entity voyages {
+    * id : INTEGER [PK]
+    --
+    titre : VARCHAR(100)
+    resume : TEXT
+    description : TEXT
+    visuel : VARCHAR(150)
+    continent : VARCHAR(50)
+    en_ligne : BOOLEAN
+    user_id : INTEGER [FK]
+}
+
+entity avis {
+    * id : INTEGER [PK]
+    --
+    contenu : TEXT
+    user_id : INTEGER [FK]
+    voyage_id : INTEGER [FK]
+    created_at : DATETIME
+    updated_at : DATETIME
+}
+
+entity likes {
+    * user_id : INTEGER [FK]
+    * voyage_id : INTEGER [FK]
+}
+
+entity etapes {
+    * id : INTEGER [PK]
+    --
+    titre : VARCHAR(100)
+    resume : TEXT
+    description : TEXT
+    debut : DATETIME
+    fin : DATETIME
+    voyage_id : INTEGER [FK]
+}
+
+entity medias {
+    * id : INTEGER [PK]
+    --
+    media_titre : VARCHAR(100)
+    media_ref : VARCHAR(150)
+    media_format : VARCHAR(50)
+    etape_id : INTEGER [FK]
+}
+
+users ||--o{ voyages : "user_id"
+users ||--o{ avis : "user_id"
+users ||--o{ likes : "user_id"
+
+voyages ||--o{ avis : "voyage_id"
+voyages ||--o{ likes : "voyage_id"
+voyages ||--o{ etapes : "voyage_id"
+
+etapes ||--o{ medias : "etape_id"
+
+@enduml

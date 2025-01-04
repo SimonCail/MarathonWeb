@@ -1,0 +1,65 @@
+@startuml MCD_Marathon
+
+entity User {
+    + id : number
+    + name : string
+    + email : string
+    + avatar : string
+    + password : string
+}
+
+entity Voyage {
+    + id : number
+    + titre : string
+    + resume : text
+    + description : text
+    + visuel : string
+    + continent : string
+    + en_ligne : boolean
+}
+
+entity Avis {
+    + id : number
+    + contenu : text
+    + date_post : date
+}
+
+entity Etape {
+    + id : number
+    + titre : string
+    + resume : text
+    + description : text
+    + debut : date
+    + fin : date
+}
+
+entity Media {
+    + id : number
+    + media_titre : string
+    + media_ref : string
+    + media_format : FORMAT_MEDIA
+}
+
+entity FORMAT_MEDIA {
+    IMAGE
+    SON
+    VIDEO
+}
+
+entity Likes {
+    + user_id : number
+    + voyage_id : number
+}
+
+User ||--o{ Voyage : "editeur"
+User ||--o{ Avis : "auteur"
+User ||--o{ Likes : "like"
+
+Voyage ||--o{ Etape : "compose"
+Voyage ||--o{ Avis : "concerne"
+Voyage ||--o{ Likes : "like"
+
+Etape ||--o{ Media : "visuels"
+Media }|--|| FORMAT_MEDIA
+
+@enduml
